@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { useQuery } from "react-query";
-import * as apiClient from '../api-client'
+import { validateToken } from "../api/register";
+
 
 interface AppContext {
   isLoggedIn: boolean;
@@ -8,13 +9,17 @@ interface AppContext {
 
 const AppContext = createContext<AppContext | undefined>(undefined);
 
-export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const { isError } = useQuery("validateToken", apiClient.validateToken, {
+export const AppContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const { isError } = useQuery("validateToken", validateToken, {
     retry: false,
   });
 
   return (
-    <AppContext.Provider value={{ isLoggedIn:!isError }}>
+    <AppContext.Provider value={{ isLoggedIn: !isError }}>
       {children}
     </AppContext.Provider>
   );
@@ -22,6 +27,5 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 
 export const useAppContext = () => {
   const context = useContext(AppContext);
-  return context as AppContext ;
+  return context as AppContext;
 };
-

@@ -1,40 +1,32 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
-import * as apiClient from '../api-client'
+import { useMutation, useQueryClient } from "react-query";
+import { httpRegister } from "../api/register";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
-export type RegisterFormData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+import { RegisterFormData } from "../utilities/Types";
 
 const Register = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     register,
     watch,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormData>();
-
-const mutation = useMutation(apiClient.register, {
-  onSuccess:() => {
-    toast.success("Registration successful!")
-    navigate("/")
-  },
-  onError:(error:Error) => {
-    toast.error(error.message)
-  }
-})
-
-
+  const queryClient = useQueryClient();
+  const mutation = useMutation(httpRegister, {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries("validateToken");
+      toast.success("Registration successful!");
+      navigate("/");
+    },
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+  });
 
   const onSubmit = handleSubmit((data) => {
-   mutation.mutate(data)
+    mutation.mutate(data);
   });
   return (
     <form className="flex flex-col gap-5" onSubmit={onSubmit}>

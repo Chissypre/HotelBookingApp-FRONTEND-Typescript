@@ -5,7 +5,9 @@ export interface PublicRoute {
 }
 export interface PrivateRoute {
   AddHotels:string;
+  MyHotels:string;
 }
+
 
 export const publicRoutes: PublicRoute = {
   landing: '/',
@@ -13,5 +15,7 @@ export const publicRoutes: PublicRoute = {
   login:'/sign-In',
 }
 export const privateRoutes: PrivateRoute = {
-  AddHotels:'/add-hotel'
+  AddHotels:'/add-hotel',
+  MyHotels:'/my-hotels',
+ 
 }

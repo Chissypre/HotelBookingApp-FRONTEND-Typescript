@@ -1,10 +1,13 @@
 import { Routes as ReactRoutes, Route } from "react-router-dom";
 import Layout from "./layouts/Layout";
-import { publicRoutes } from "./utilities/routes";
+import { publicRoutes, privateRoutes } from "./utilities/routes";
 import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
+import AddHotels from "./pages/AddHotels";
+import { useAppContext } from "./contexts/AppContext";
 
 const Routes = () => {
+  const { isLoggedIn } = useAppContext();
   return (
     <ReactRoutes>
       <Route
@@ -31,6 +34,19 @@ const Routes = () => {
           </Layout>
         }
       />
+
+      {isLoggedIn && (
+        <>
+          <Route
+            path={privateRoutes.AddHotels}
+            element={
+              <Layout>
+                <AddHotels/>
+              </Layout>
+            }
+          />
+        </>
+      )}
     </ReactRoutes>
   );
 };

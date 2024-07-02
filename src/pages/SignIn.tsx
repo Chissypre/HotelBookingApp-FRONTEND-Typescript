@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { httpLogin } from "../api/signin";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SignInFormData } from "../utilities/Types";
 
 const SignIn = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const location = useLocation()
   const {
     register,
     formState: { errors },
@@ -18,7 +19,7 @@ const SignIn = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries("validateToken");
       toast.success("Login successful!");
-      navigate("/");
+      navigate(location.state?.from?.pathname || "/");
     },
     onError: (error: Error) => {
       toast.error(error.message);

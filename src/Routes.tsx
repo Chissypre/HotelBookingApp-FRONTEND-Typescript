@@ -8,6 +8,10 @@ import { useAppContext } from "./contexts/AppContext";
 import MyHotels from "./pages/MyHotels";
 import EditHotel from "./pages/EditHotel";
 import Search from "./pages/Search";
+import HotelDetail from "./pages/HotelDetail";
+import Booking from "./pages/Booking";
+import MyBookings from "./pages/MyBookings";
+import Home from "./pages/Home";
 
 const Routes = () => {
   const { isLoggedIn } = useAppContext();
@@ -17,7 +21,7 @@ const Routes = () => {
         path={publicRoutes.landing}
         element={
           <Layout>
-            <p>Home page</p>
+            <Home/>
           </Layout>
         }
       />
@@ -26,6 +30,14 @@ const Routes = () => {
         element={
           <Layout>
             <Search />
+          </Layout>
+        }
+      />
+      <Route
+        path="/detail/:hotelId"
+        element={
+          <Layout>
+            <HotelDetail />
           </Layout>
         }
       />
@@ -49,10 +61,19 @@ const Routes = () => {
       {isLoggedIn && (
         <>
           <Route
+            path="/hotel/:hotelId/booking"
+            element={
+              <Layout>
+                <Booking />
+              </Layout>
+            }
+          />
+
+          <Route
             path={privateRoutes.AddHotels}
             element={
               <Layout>
-                <AddHotels/>
+                <AddHotels />
               </Layout>
             }
           />
@@ -60,7 +81,15 @@ const Routes = () => {
             path={privateRoutes.MyHotels}
             element={
               <Layout>
-                <MyHotels/>
+                <MyHotels />
+              </Layout>
+            }
+          />
+          <Route
+            path="/my-bookings"
+            element={
+              <Layout>
+                <MyBookings />
               </Layout>
             }
           />
@@ -68,7 +97,7 @@ const Routes = () => {
             path="/edit-hotel/:hotelId"
             element={
               <Layout>
-                <EditHotel/>
+                <EditHotel />
               </Layout>
             }
           />

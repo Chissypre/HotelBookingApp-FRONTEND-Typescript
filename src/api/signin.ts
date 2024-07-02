@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../utilities/constants";
-import { SignInFormData } from "../utilities/Types";
+import { SignInFormData, UserType } from "../utilities/Types";
 
 export const httpLogin = async (formData: SignInFormData) => {
   const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
@@ -27,3 +27,16 @@ export const httpLogout = async () => {
     throw new Error("Error during sign out");
   }
 };
+
+
+export const httpFetchCurrrentUser = async ():Promise<UserType> => {
+  const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+      credentials: "include",
+    });
+  if (!response.ok) {
+      throw new Error("Error fetching user");
+    }
+  return response.json()
+  
+  }
+    

@@ -3,7 +3,7 @@ import { UserType } from "../../../utilities/Types";
 import { httpCreateRoomBooking, PaymentIntentResponse } from "../../../api/payment";
 import {
   CardElement,
-  Elements,
+ /*  Elements, */
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
